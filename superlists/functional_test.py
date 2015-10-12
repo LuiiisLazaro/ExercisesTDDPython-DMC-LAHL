@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 import unittest
 
 class NewVisitorTest(unittest.TestCase):
@@ -17,17 +18,33 @@ class NewVisitorTest(unittest.TestCase):
 
 	#Él ve el titulo de la página y el encabezado mencinando "To-Do lists"
         self.assertIn('To-Do', self.browser.title)
+        header_text = self.browser.find_element_by_tag_name('h1').text
+        self.assertIn('To-Do', header_text)
         self.fail("Finalizar la Prueba!!! :D")
 
 	#Él es invitado a ingresar un item directamente a "To-Do list"
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertEqual(
+            inputbox.get_attribute('placeholder'), 
+            'Ingresa un Elemento a To-Do'
+        )
 
 	#El escribe "comprar plumas de pavo" dentro de la caja de texto, El hobby de Daniel es hacer señuelos para pesca.
+        inputbox.send_keys('Compra plumas de pavo')
 
 	#Cuando el da enter, la página se actualiza y ahora la lista de la página contiene un item
 	#llamado "1: comprar plumas de pavo real".
+        inputbox.send_keys(keys.ENTER)
+
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_element_by_tag_name('tr')
+        self.assertTrue(
+            any(row.text=='1: comprar plumas de pavo' for row in rows)
+        )
 
 	#todavia hay una caja de texto invitandole a agregar otro item. el 
 	# ingresa "usar plumas y pavo para hacer señuelo de pesca"
+        self.fail('Prueba Finalizada :D ')
 
 	#la página se actualiza nuevamente y nos muestra dos elementos en la lista.
 
