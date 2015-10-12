@@ -35,14 +35,12 @@ class NewVisitorTest(unittest.TestCase):
 	#Cuando el da enter, la página se actualiza y ahora la lista de la página contiene un item
 	#llamado "1: comprar plumas de pavo real".
         inputbox.send_keys(Keys.ENTER)
-
+        #import time
+        #time.sleep(10)
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(
-            any(row.text == '1: comprar plumas de pavo' for row in rows), 
-            "El Nuevo Elemento no Aparece en la Tabla"
-        )
-
+        self.assertIn('1: comprar plumas de pavo', [row.text for row in rows])
+        self.assertIn('2: usar las plimas de pavo', [row.text for row in rows])
 	#todavia hay una caja de texto invitandole a agregar otro item. el 
 	# ingresa "usar plumas y pavo para hacer señuelo de pesca"
         self.fail('Prueba Finalizada :D ')
