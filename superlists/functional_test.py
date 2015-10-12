@@ -7,10 +7,18 @@ class NewVisitorTest(unittest.TestCase):
         self.browser = webdriver.Firefox()
 	#browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
+
     
     def tearDown(self):
         self.browser.quit()
-	
+
+
+    def check_for_row_in_list_table(self, row_text):
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(row_text, [row.text for row in rows])
+
+
     def test_can_start_a_list_and_retrieve_it_later(self):
         #Daniel ha escuchado acerca de una nueva aplicación genial en línea "to-do app"
         #Él va ha checar esta página.
@@ -35,6 +43,8 @@ class NewVisitorTest(unittest.TestCase):
 	#Cuando el da enter, la página se actualiza y ahora la lista de la página contiene un item
 	#llamado "1: comprar plumas de pavo real".
         inputbox.send_keys(Keys.ENTER)
+        self.check_for_row_in_list_table("1: comprar plumas de pavo")
+        self.check_for_row_in_list_table("1: usar las plumas de pavo")
         #import time
         #time.sleep(10)
         table = self.browser.find_element_by_id('id_list_table')
