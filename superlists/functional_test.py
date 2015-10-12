@@ -20,7 +20,7 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('To-Do', self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('To-Do', header_text)
-        self.fail("Finalizar la Prueba!!! :D")
+        #self.fail("Finalizar la Prueba!!! :D")
 
 	#Él es invitado a ingresar un item directamente a "To-Do list"
         inputbox = self.browser.find_element_by_id('id_new_item')
@@ -30,16 +30,17 @@ class NewVisitorTest(unittest.TestCase):
         )
 
 	#El escribe "comprar plumas de pavo" dentro de la caja de texto, El hobby de Daniel es hacer señuelos para pesca.
-        inputbox.send_keys('Compra plumas de pavo')
+        inputbox.send_keys('comprar plumas de pavo')
 
 	#Cuando el da enter, la página se actualiza y ahora la lista de la página contiene un item
 	#llamado "1: comprar plumas de pavo real".
-        inputbox.send_keys(keys.ENTER)
+        inputbox.send_keys(Keys.ENTER)
 
         table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_element_by_tag_name('tr')
+        rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
-            any(row.text=='1: comprar plumas de pavo' for row in rows)
+            any(row.text == '1: comprar plumas de pavo' for row in rows), 
+            "El Nuevo Elemento no Aparece en la Tabla"
         )
 
 	#todavia hay una caja de texto invitandole a agregar otro item. el 
