@@ -50,7 +50,7 @@ class NewVisitorTest(unittest.TestCase):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertIn('1: comprar plumas de pavo', [row.text for row in rows])
-        self.assertIn('2: usar las plimas de pavo', [row.text for row in rows])
+        self.assertIn('2: usar las plumas de pavo', [row.text for row in rows])
 	#todavia hay una caja de texto invitandole a agregar otro item. el 
 	# ingresa "usar plumas y pavo para hacer señuelo de pesca"
         self.fail('Prueba Finalizada :D ')

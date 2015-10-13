@@ -12,7 +12,7 @@
             {% for item in items %}
             <tr>
                 <td>
-                    1: {{ new_item_text }}
+                   {{forloop.counter}}: {{ item.text }}
                 </td>
             </tr>
             {% endfor %}
