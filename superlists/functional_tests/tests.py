@@ -42,19 +42,35 @@ class NewVisitorTest(LiveServerTestCase):
 	#Cuando el da enter, la página se actualiza y ahora la lista de la página contiene un item
 	#llamado "1: comprar plumas de pavo real".
         inputbox.send_keys(Keys.ENTER)
-        self.check_for_row_in_list_table("1: comprar plumas de pavo")
-
-        inputbox2 = self.browser.find_element_by_id('id_new_item')
-        inputbox2.send_keys('usar las plumas de pavo')
-        inputbox2.send_keys(Keys.ENTER)
-        self.check_for_row_in_list_table("2: usar las plumas de pavo")
-
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1: comprar plumas de pavo', [row.text for row in rows])
-        self.assertIn('2: usar las plumas de pavo', [row.text for row in rows])
+        #editar
+        daniel_list_url = self.browser.current_url
+        self.assertRegex(daniel_list_url,'/lists/.+')
+       
 	#todavia hay una caja de texto invitandole a agregar otro item. el 
 	# ingresa "usar plumas y pavo para hacer señuelo de pesca"
+        #un usuario llego, Daniel se fue por galletas
+        self.browser.quit()
+        self.browser = webdriver.Firefox()
+        #Luis visita la pagina
+        self.browser.get(self.live_server_url)
+        page_text = self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('comprar plumas de pavo', page_text)
+        self.assertNotIn('usar las plumas de pavo', page_text)
+
+        #Luis inicia una nueva lista ingresando un nuevo elemento
+        inputbox3 = self.browser.find_element_by_id('id_new_item')
+        inputbox3.send_keys('comprar leche')
+        inputbox3.send_keys(Keys.ENTER)
+        #luis obtiene su propia url
+        luis_list_url = self.browser.current_url
+        self.assertRegex(luis_list_url,'/lists/.+')
+        self.assertNotEqual(daniel_list_url, luis_list_url)
+
+        #nuevamente, no hay rastro de la lista de daniel
+        page_text = self.browser.find_element_by_tag_name('body').text
+        self.assertNotIn('comprar plumas de pavo', page_text)
+        self.assertIn('comprar leche', page_text)
+        #luis se va a dormir
         self.fail('Prueba Finalizada :D ')
 
 	#la página se actualiza nuevamente y nos muestra dos elementos en la lista.
@@ -65,6 +81,3 @@ class NewVisitorTest(LiveServerTestCase):
 	#El visita esa URl --- su lista "To-Do" todavia se encuentra ahí
 
 	#satisfecho, el va a dormir.
-
-browser.quit()
-

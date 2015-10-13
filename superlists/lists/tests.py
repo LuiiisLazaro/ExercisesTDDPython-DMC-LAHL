@@ -78,5 +78,5 @@ class HomePageTest(TestCase):
         request = HttpRequest()
         response = home_page(request)
 
-        self.assertIn('Itemey 1', response.content.decode())
-        self.assertIn('Itemey 2', response.content.decode())
+        self.assertIn('itemey 1', response.content.decode())
+        self.assertIn('itemey 2', response.content.decode())
