@@ -23,25 +23,25 @@ class NewVisitorTest(LiveServerTestCase):
         #Él va ha checar esta página.
         self.browser.get(self.live_server_url)
 
-	#Él ve el titulo de la página y el encabezado mencinando "To-Do lists"
+    #Él ve el titulo de la página y el encabezado mencinando "To-Do lists"
         self.assertIn('To-Do', self.browser.title)
         header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('To-Do', header_text)
-        #self.fail("Finalizar la Prueba!!! :D")
 
-	#Él es invitado a ingresar un item directamente a "To-Do list"
+    #Él es invitado a ingresar un item directamente a "To-Do list"
         inputbox = self.browser.find_element_by_id('id_new_item')
         self.assertEqual(
             inputbox.get_attribute('placeholder'), 
             'Ingresa un Elemento a To-Do'
         )
 
-	#El escribe "comprar plumas de pavo" dentro de la caja de texto, El hobby de Daniel es hacer señuelos para pesca.
+    #El escribe "comprar plumas de pavo" dentro de la caja de texto, El hobby de Daniel es hacer señuelos para pesca.
         inputbox.send_keys('comprar plumas de pavo')
 
-	#Cuando el da enter, la página se actualiza y ahora la lista de la página contiene un item
-	#llamado "1: comprar plumas de pavo real".
+    #Cuando el da enter, la página se actualiza y ahora la lista de la página contiene un item
+    #llamado "1: comprar plumas de pavo real".
         inputbox.send_keys(Keys.ENTER)
+<<<<<<< HEAD
         #editar
         daniel_list_url = self.browser.current_url
         self.assertRegex(daniel_list_url,'/lists/.+')
@@ -71,13 +71,35 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertNotIn('comprar plumas de pavo', page_text)
         self.assertIn('comprar leche', page_text)
         #luis se va a dormir
+=======
+
+        self.check_for_row_in_list_table("1: comprar plumas de pavo")
+
+        inputbox2 = self.browser.find_element_by_id('id_new_item')
+        inputbox2.send_keys('usar las plumas de pavo')
+        inputbox2.send_keys(Keys.ENTER)
+        self.check_for_row_in_list_table("2: usar las plumas de pavo")
+
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn('1: comprar plumas de pavo', [row.text for row in rows])
+        self.assertIn('2: usar las plumas de pavo', [row.text for row in rows])
+    #todavia hay una caja de texto invitandole a agregar otro item. el
+    # ingresa "usar plumas y pavo para hacer señuelo de pesca"
+>>>>>>> 8c9f28ffd79c03053d7b085d0c5c348b16003304
         self.fail('Prueba Finalizada :D ')
 
-	#la página se actualiza nuevamente y nos muestra dos elementos en la lista.
+    #la página se actualiza nuevamente y nos muestra dos elementos en la lista.
 
-	#Daniel se pregunta si el sitio recordará su lista. Entonces se percata que el sitio 
-	#ha generado una unica URL para el, --- hay alguna explicación para ese efecto.
+    #Daniel se pregunta si el sitio recordará su lista. Entonces se percata que el sitio
+    #ha generado una unica URL para el, --- hay alguna explicación para ese efecto.
 
-	#El visita esa URl --- su lista "To-Do" todavia se encuentra ahí
+    #El visita esa URl --- su lista "To-Do" todavia se encuentra ahí
 
+<<<<<<< HEAD
 	#satisfecho, el va a dormir.
+=======
+    #satisfecho, el va a dormir.
+
+
+>>>>>>> 8c9f28ffd79c03053d7b085d0c5c348b16003304
