@@ -5,7 +5,6 @@ import unittest
 class NewVisitorTest(unittest.TestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
-	#browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
 
     
@@ -44,9 +43,12 @@ class NewVisitorTest(unittest.TestCase):
 	#llamado "1: comprar plumas de pavo real".
         inputbox.send_keys(Keys.ENTER)
         self.check_for_row_in_list_table("1: comprar plumas de pavo")
-        self.check_for_row_in_list_table("1: usar las plumas de pavo")
-        #import time
-        #time.sleep(10)
+
+        inputbox2 = self.browser.find_element_by_id('id_new_item')
+        inputbox2.send_keys('usar las plumas de pavo')
+        inputbox2.send_keys(Keys.ENTER)
+        self.check_for_row_in_list_table("2: usar las plumas de pavo")
+
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertIn('1: comprar plumas de pavo', [row.text for row in rows])
