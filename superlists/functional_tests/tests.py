@@ -41,7 +41,6 @@ class NewVisitorTest(LiveServerTestCase):
     #Cuando el da enter, la página se actualiza y ahora la lista de la página contiene un item
     #llamado "1: comprar plumas de pavo real".
         inputbox.send_keys(Keys.ENTER)
-<<<<<<< HEAD
         #editar
         daniel_list_url = self.browser.current_url
         self.assertRegex(daniel_list_url,'/lists/.+')
@@ -71,7 +70,6 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertNotIn('comprar plumas de pavo', page_text)
         self.assertIn('comprar leche', page_text)
         #luis se va a dormir
-=======
 
         self.check_for_row_in_list_table("1: comprar plumas de pavo")
 
@@ -86,7 +84,6 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertIn('2: usar las plumas de pavo', [row.text for row in rows])
     #todavia hay una caja de texto invitandole a agregar otro item. el
     # ingresa "usar plumas y pavo para hacer señuelo de pesca"
->>>>>>> 8c9f28ffd79c03053d7b085d0c5c348b16003304
         self.fail('Prueba Finalizada :D ')
 
     #la página se actualiza nuevamente y nos muestra dos elementos en la lista.
@@ -95,11 +92,6 @@ class NewVisitorTest(LiveServerTestCase):
     #ha generado una unica URL para el, --- hay alguna explicación para ese efecto.
 
     #El visita esa URl --- su lista "To-Do" todavia se encuentra ahí
-
-<<<<<<< HEAD
-	#satisfecho, el va a dormir.
-=======
     #satisfecho, el va a dormir.
 
 
->>>>>>> 8c9f28ffd79c03053d7b085d0c5c348b16003304
