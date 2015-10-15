@@ -4,11 +4,11 @@ from lists.models import Item
 
 # Create your views here.
 def home_page(request):
-    if request.method == 'POST':
-        Item.objects.create(text=request.POST['item_text'])
-        return redirect('/lists/the-only-list-in-the-world/')
+    # if request.method == 'POST': delete
+        # Item.objects.create(text=request.POST['item_text']) delete
+        #return redirect('/lists/the-only-list-in-the-world/') delete
 
-    # items = Item.objects.all()
+    # items = Item.objects.all() delete
     return render(request, 'home.html')
 
 
