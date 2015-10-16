@@ -55,7 +55,11 @@ class NewVisitorTest(LiveServerTestCase):
 
         self.check_for_row_in_list_table("2: usar las plumas de pavo")
         self.check_for_row_in_list_table("1: comprar plumas de pavo")
-        # self.check_for_row_in_list_table("2: usar las plumas de pavo")
+
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn('1: comprar plumas de pavo', [row.text for row in rows])
+        self.assertIn('2: usar las plumas de pavo', [row.text for row in rows])
 
         # un usuario llego, Daniel se fue por galletas
         self.browser.quit()
@@ -81,13 +85,9 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertIn('comprar leche', page_text)
         # luis se va a dormir
 
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn('1: comprar plumas de pavo', [row.text for row in rows])
-        self.assertIn('2: usar las plumas de pavo', [row.text for row in rows])
         # todavia hay una caja de texto invitandole a agregar otro item. el
         # ingresa "usar plumas y pavo para hacer señuelo de pesca"
-        self.fail('Prueba Finalizada :D ')
+        # self.fail('Prueba Finalizada :D ')
 
         # la página se actualiza nuevamente y
         # nos muestra dos elementos en la lista.
