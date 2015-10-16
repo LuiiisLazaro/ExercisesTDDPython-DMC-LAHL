@@ -1,4 +1,5 @@
-from lists.models import Item, List
+from lists.models import Item
+from lists.models import List
 from django.core.urlresolvers import resolve
 from django.template.loader import render_to_string
 from django.test import TestCase
@@ -150,9 +151,11 @@ class ListAndItemsModelTest(TestCase):
 class NewItemTest(TestCase):
     def test_can_save_a_POST_request_to_an_existing_list(self):
         # other_list = List.objects.create()
+        list_ = List()
         correct_list = List.objects.create()
+
         self.client.post(
-            '/lists/%d/add_item' % (correct_list.id,),
+            '/lists/'+str(correct_list.id)+'/add_item',
             data={'item_text': 'a new item for an existing list'}
         )
 
@@ -163,6 +166,7 @@ class NewItemTest(TestCase):
 
     def test_redirects_to_list_view(self):
         # other_list = List.objects.create()
+        list_ = List()
         correct_list = List.objects.create()
         response = self.client.post(
             '/lists/%d/add_item' % (correct_list.id,),
