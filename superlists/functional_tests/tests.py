@@ -1,7 +1,33 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from unittest import skip
 import sys
+
+class FunctionalTest(StaticLiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        for arg in sys.argv:
+            if 'liveserver' in arg:
+                cls.server_url = 'http://'+arg.split('=')[1]
+                return
+        super().setUpClass()
+        cls.server_url= cls.live_server_url
+
+    @classmethod
+    def tearDownClass(cls):
+        if cls.server_url == cls.live_server_url:
+            super().tearDownClass()
+
+    def setUp(self):
+        self.browser = webdriver.Firefox()
+        self.browser.implicitly_wait(3)
+
+    def tearDown(self):
+        # arregla un bug en usuarios windows
+        self.browser.refresh()
+        self.browser.quit()
+
 
 class NewVisitorTest(StaticLiveServerTestCase):
 
@@ -28,14 +54,6 @@ class NewVisitorTest(StaticLiveServerTestCase):
         self.browser.refresh()
         self.browser.quit()
 
-    def setUp(self):
-        self.browser = webdriver.Firefox()
-        self.browser.implicitly_wait(3)
-
-    def tearDown(self):
-        # arregla un bug en usuarios windows
-        self.browser.refresh()
-        self.browser.quit()
 
     def check_for_row_in_list_table(self, row_text):
         table = self.browser.find_element_by_id('id_list_table')
@@ -149,3 +167,10 @@ class NewVisitorTest(StaticLiveServerTestCase):
             512,
             delta=5
         )
+
+
+    @skip
+    def test_cannot_add_empty_list_items(self):
+        # daniel va a la página de inicio y accidentalmente hizo un submit
+        # una lista vacia. le dio un enter a la caja de texto
+        self.fail('escribe me')
