@@ -1,6 +1,7 @@
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from .base import FunctionalTest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+<<<<<<< HEAD:superlists/functional_tests/tests.py
 import sys
 
 class NewVisitorTest(StaticLiveServerTestCase):
@@ -18,20 +19,11 @@ class NewVisitorTest(StaticLiveServerTestCase):
     def tearDownClass(cls):
         if cls.server_url == cls.live_server_url:
             super().tearDownClass()
+=======
+>>>>>>> 7508ace41841880707050a8ddb2ea04a794c0783:superlists/functional_tests/test_simple_list_creation.py
 
-    def setUp(self):
-        self.browser = webdriver.Firefox()
-        self.browser.implicitly_wait(3)
 
-    def tearDown(self):
-        # arregla un bug en usuarios windows
-        self.browser.refresh()
-        self.browser.quit()
-
-    def check_for_row_in_list_table(self, row_text):
-        table = self.browser.find_element_by_id('id_list_table')
-        rows = table.find_elements_by_tag_name('tr')
-        self.assertIn(row_text, [row.text for row in rows])
+class NewVisitorTest(FunctionalTest):
 
     def test_can_start_a_list_and_retrieve_it_later(self):
         # Daniel ha escuchado acerca de una nueva aplicacion
@@ -116,6 +108,10 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
         # El visita esa URl --- su lista "To-Do" todavia se encuentra ahí
         # satisfecho, el va a dormir.
+
+
+
+class LayoutAndStylingTest(FunctionalTest):
 
     def test_layout_and_styling(self):
         # daniel va a la pagina de inicio
