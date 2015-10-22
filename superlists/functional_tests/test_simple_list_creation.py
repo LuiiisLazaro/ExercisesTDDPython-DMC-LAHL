@@ -1,26 +1,6 @@
 from .base import FunctionalTest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-<<<<<<< HEAD:superlists/functional_tests/tests.py
-import sys
-
-class NewVisitorTest(StaticLiveServerTestCase):
-
-    @classmethod
-    def setUpClass(cls):
-        for arg in sys.argv:
-            if 'liveserver' in arg:
-                cls.server_url = 'http://'+arg.split('=')[1]
-                return
-        super().setUpClass()
-        cls.server_url= cls.live_server_url
-
-    @classmethod
-    def tearDownClass(cls):
-        if cls.server_url == cls.live_server_url:
-            super().tearDownClass()
-=======
->>>>>>> 7508ace41841880707050a8ddb2ea04a794c0783:superlists/functional_tests/test_simple_list_creation.py
 
 
 class NewVisitorTest(FunctionalTest):
