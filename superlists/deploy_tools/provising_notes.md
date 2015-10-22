@@ -103,3 +103,34 @@ elspeth@TestPython:~/sites/mylistspython.tk/source/superlists$ tree -I __pycache
     ├── urls.py
     └── wsgi.py
 
+
+
+//etc/nginx/site-ava/testinggoat.tk
+
+server {
+listen 80;
+server_name testinggoat.tk;
+location /static {
+alias /home/elspeth/sites/mylistspython.tk/static;
+}
+
+location / {
+proxy_set_header Host $host;
+proxy_pass http://unix:/tmp/testinggoat.tk.socket;
+}
+#location / {
+#proxy_pass http://localhost:8000;
+#}
+}
+
+
+
+//etc/init/testinggoat.conf
+description "Gunicorn server for superlists.testinggoat.tk"
+start on net-device-up
+stop on shutdown
+respawn
+setuid elspeth
+chdir /home/elspeth/sites/mylistspython.tk/source/superlists
+exec ../../virtualenv/bin/gunicorn --bind unix:/tmp/testinggoat.tk.socket superlists.wsgi:application
+

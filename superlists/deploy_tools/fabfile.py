@@ -22,7 +22,8 @@ def _create_directory_structure_if_necessary(site_folder):
 
 
 def _get_latest_source(source_folder):
-    source_folder = '/home/elspeth/sites/mylistspython.tk/source'
+    site_folder = '/home/%s/sites/%s' % (env.user, env.host)
+    source_folder = site_folder + '/source'
     if exists(source_folder + '/.git'):
         run('cd %s && git fetch' % (source_folder,))
     else:
