@@ -7,7 +7,7 @@ REPO_URL = 'https://github.com/LuiiisLazaro/ExercisesTDDPython_DMC_LAHL.git'
 
 def deploy():
     site_folder = '/home/%s/sites/%s' % (env.user, env.host)
-    source_folder = site_folder + '/source'
+    source_folder = site_folder + '/source/superlists'
     _create_directory_structure_if_necessary(site_folder)
     _get_latest_source(source_folder)
     _update_settings(source_folder, env.host)
@@ -17,11 +17,12 @@ def deploy():
 
 
 def _create_directory_structure_if_necessary(site_folder):
-    for subfordel in ('database', 'static', 'virtualenv', 'source'):
+    for subfordel in ('database', 'static', 'virtualenv', 'source/superlists'):
         run('mkdir -p %s/%s' % (site_folder, subfordel))
 
 
 def _get_latest_source(source_folder):
+    source_folder = '/home/elspeth/sites/mylistspython.tk/source'
     if exists(source_folder + '/.git'):
         run('cd %s && git fetch' % (source_folder,))
     else:
@@ -46,7 +47,7 @@ def _update_settings(source_folder, site_name):
 
 
 def _update_virtualenv(source_folder):
-    virtualenv_folder = source_folder + '/../virtualenv'
+    virtualenv_folder = source_folder + '/../../virtualenv'
     if not exists(virtualenv_folder + '/bin/pip'):
         run('virtualenv --python=python3 %s' % (virtualenv_folder,))
     run('%s/bin/pip install -r %s/requirements.txt' % (
@@ -55,11 +56,11 @@ def _update_virtualenv(source_folder):
 
 
 def _update_static_files(source_folder):
-    run('cd %s && ../virtualenv/bin/python3 manage.py collectstatic --noinput' % (
+    run('cd %s && ../../virtualenv/bin/python3 manage.py collectstatic --noinput' % (
         source_folder,
     ))
 
 def _update_databse(source_folder):
-    run('cd %s && ../virtualenv/bin/python3 manage.py migrate --noinput' %(
+    run('cd %s && ../../virtualenv/bin/python3 manage.py migrate --noinput' %(
         source_folder,
     ))
