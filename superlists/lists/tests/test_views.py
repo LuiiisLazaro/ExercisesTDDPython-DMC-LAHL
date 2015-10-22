@@ -1,3 +1,4 @@
+from lists.forms import ItemForm
 from lists.models import Item
 from lists.models import List
 from django.core.urlresolvers import resolve
@@ -17,10 +18,17 @@ class HomePageTest(TestCase):
     def test_home_page_returns_correct_html(self):
         request = HttpRequest()
         response = home_page(request)
-        expected_html = render_to_string('home.html')
-        self.assertEqual(response.content.decode(), expected_html)
-        self.assertIn(b'<title>To-Do lists</title>', response.content)
-        self.assertTrue(response.content.strip().endswith(b'</html>'))
+        expected_html = render_to_string('home.html', {'form':ItemForm})
+        self.assertMultiLineEqual(response.content.decode(), expected_html)
+
+    def test_home_page_renders_home_template(self):
+        response = self.client.get('/')
+        self.assertTemplateUsed(response, 'home.html') 
+    
+    def test_home_page_uses_item_form(self):
+        response = self.client.get('/')
+        self.assertIsInstance(response.context['form'], ItemForm) 
+
 
 
 class NewListTest(TestCase):

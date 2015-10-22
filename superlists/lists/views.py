@@ -1,11 +1,11 @@
+from lists.forms import ItemForm
 from django.shortcuts import redirect, render
 from lists.models import Item, List
 from django.core.exceptions import ValidationError
 
 
-# Create your views here.
 def home_page(request):
-    return render(request, 'home.html')
+    return render(request, 'home.html', {'form':ItemForm()})
 
 
 def view_list(request, list_id):
@@ -19,7 +19,6 @@ def view_list(request, list_id):
             return redirect(list_)
         except ValidationError:
             error = "You can't have an empty list item"
-
     return render(request, 'list.html', {'list': list_, 'error': error})
 
 
