@@ -7,7 +7,7 @@ class ItemValidationTest(FunctionalTest):
         # daniel va a la página de inicio y accidentalmente hizo un submit
         # una lista vacia. le dio un enter a la caja de texto
         self.browser.get(self.server_url)
-        self.browser.get_item_input_box.send_keys('\n')
+        self.browser.get_item_input_box().send_keys('\n')
 
         # la pagina de inicio se refresca, y hay un mensaje de error diciendo
         # la lista no puede estar en blanco
