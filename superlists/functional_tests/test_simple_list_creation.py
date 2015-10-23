@@ -1,4 +1,4 @@
-from .base import FunctionalTest
+from base import FunctionalTest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
@@ -18,7 +18,7 @@ class NewVisitorTest(FunctionalTest):
         self.assertIn('To-Do', header_text)
 
         # Él es invitado a ingresar un item directamente a "To-Do list"
-        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox = self.get_item_input_box()
         self.assertEqual(inputbox.get_attribute('placeholder'),
                          'Ingresa un Elemento a To-Do'
                          )
